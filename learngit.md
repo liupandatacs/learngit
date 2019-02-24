@@ -109,13 +109,18 @@ git reset --hard <commit id> 重新回到当前记录
 
   场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考[版本回退](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013744142037508cf42e51debf49668810645e02887691000)一节，不过前提是没有推送到远程库。
 
-* 要关联一个远程库，使用命令
+  # 提交到远程库
+
+* **最后一步，就是提交到远程，终于要来了！！要关联一个远程库，使用下面命令**
 
   ```
-  git remote add origin git@username/file.git
+  git remote add origin git@username/learngit.git
   关联后，使用命令 git push -u origin master 第一次推送master分支的所有内容；
   此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改
   ```
 
   
 
+# 从远程库关联
+
+* 上文是先有本地库，后有远程库的时候，关联远程库的步骤。
