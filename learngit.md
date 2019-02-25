@@ -1,5 +1,7 @@
 # GIT学习笔记 by 廖雪峰
 
+[](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
+
 ## 第一页
 
 ### 创建版本库
@@ -139,8 +141,83 @@ git reset --hard <commit id> 重新回到当前记录
    git push origin master
   ```
 
-  
+  ### 移除本地仓库和远程仓库的关联
 
-# 从远程库关联
+  如果**远程仓库**作废或者添加了错误的**远程仓库地址**，可以用下面的命令移除掉。
 
-* 上文是先有本地库，后有远程库的时候，关联远程库的步骤。
+  注意：origin后面的内容需要和关联远程仓库时填写的内容一致才可以。
+
+  ```
+  git remote rm origin //path.git
+  ```
+
+  ### 推送本地修改到远程
+
+  推送前一定要先拉取最新代码，并且每次修改前及时拉取最新代码是非常好的习惯。
+
+  ```markdown
+  // 拉取最新代码,该命令用于从另一个存储库或本地分支获取并集成（整合）
+  //主要作用是取回远程主机某个分支的更新，再与本地的指定分支合并
+  git pull origin master
+  // 查看本地仓库状态
+  git status
+  //将所有修改更新至暂存区
+  git add .
+  //提交暂存区更改 并写上明确的注释说明
+  git commit -m "注释内容"
+  // 提交修改至主分支
+  git push origin master
+  ```
+
+  至此就可以完成从仓库初始化到文件提交的完整过程了。
+
+  如果是参与已经存在的项目，即远程仓库已经存在并且已有项目文件在了，下面介绍如何参与已有项目。
+
+## 从远程库关联
+
+* 先在远程中新建一个仓库，远程仓库准备好后，使用下面命令克隆一个本地库
+
+```
+//首先需要clone远程仓库到本地，然后拉取新代码就可以了
+git clone git@path/file.git
+// 查看远程仓库版本
+git remote -v
+// 拉取远程仓库更新，git fetch:相当于从远程获取最新版本到本地，不会自动合并。
+git fetch origin master
+```
+
+> 注意：git pull 与git fetch的区别
+>
+> ```
+> // 从远程的origin的master主分支下载
+> git fetch origin master:tmp
+> //比较本地的master 分支和origin/master分支的差别
+> git diff temp
+> //最后进行合并
+> git merge tmp
+> 
+> git pull:相当于从远程获取最新版本并merge到本地
+> git pull origin master
+> 其实就相当于，git fetch 和git merge,在实际应用中，git fetch 更安全一些，因为在merge前，可以查看新情况，然后再决定是否合并。
+> ```
+>
+> 
+
+## 强制覆盖本地文件
+
+有时候临时在**本地仓库**做了修改，但是不想保留，再拉取更新的时候要强制覆盖本地文件，可以用如下命令
+
+```
+git fetch --all
+git reset --hard origin/master
+git pull
+```
+
+
+
+### 小结
+
+要克隆一个仓库，首先必须知道仓库的地址，然后使用`git clone`命令克隆
+
+Git 支持多种协议，包括`https`，但通过`ssh`支持的原生`git`协议速度最快
+
